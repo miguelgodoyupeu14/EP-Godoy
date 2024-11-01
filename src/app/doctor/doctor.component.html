@@ -1,0 +1,56 @@
+<app-sidebar></app-sidebar>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+<button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success" (click)="showDialogCreate()" style="margin-bottom: 20px;"></button>
+<p-table [value]="doctores" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ID</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Especialidad</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-doctor>
+        <tr>
+            <td>{{ doctor.id }}</td>
+            <td>{{ doctor.nombres }}</td>
+            <td>{{ doctor.apellidos }}</td>
+            <td>{{ doctor.especialidad.nombre }}</td>
+            <td>
+                <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded" (click)="showDialogEdit(doctor.id)"></button>
+                <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteDoctor(doctor.id)"></button>     
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+</div>
+
+<p-dialog header="{{titulo}}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+    <div class="p-fluid" style="gap: 1rem;">
+        <div class="p-field" style="margin-bottom: 1.5rem;">
+            <label for="nombre" class="mb-1">Nombres</label>
+            <input pInputText [(ngModel)]="doctor.nombres" name="nombre" id="nombre" autocomplete="off" />
+        </div>
+        
+        <div class="p-field" style="margin-bottom: 1.5rem;">
+            <label for="apellido" class="mb-1">Apellidos</label>
+            <input pInputText [(ngModel)]="doctor.apellidos" name="apellido" id="apellido" autocomplete="off" />
+        </div>
+        
+        <div class="p-field" style="margin-bottom: 1.5rem;">
+            <label for="carrera" class="mb-1">Especialidad</label>
+            <p-dropdown [options]="especialidadOpttion" [(ngModel)]="doctor.especialidad" optionLabel="nombre" placeholder="Seleccionar Especialidad" 
+                class="w-full" [panelStyle]="{'max-height': '200px', 'overflow-y': 'auto'}" [style]="{'width': '100%'}"
+                [appendTo]="'body'" [baseZIndex]="10000" styleClass="text-sm sm:text-base w-full">
+            </p-dropdown>
+        </div>
+    </div>
+    
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+        <p-button label="{{opc}}" (click)="opcion()" />
+    </div>
+</p-dialog>
+<p-toast />
+<p-confirmDialog />
+

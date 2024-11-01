@@ -1,0 +1,37 @@
+<app-sidebar></app-sidebar>
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-success" (click)="showDialogCreate()" style="margin-bottom: 20px;"></button>
+
+    <p-table [value]="especialidades" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-especialidad>
+            <tr>
+                <td>{{ especialidad.id }}</td>
+                <td>{{ especialidad.nombre }}</td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded" (click)="showDialogEdit(especialidad.id)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteEspecialidad(especialidad.id)"></button>     
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-dialog header="{{titulo}}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="nombre" class="font-semibold w-6rem">Especialidad</label>
+            <input pInputText [(ngModel)]="especialidad.nombre" name="nombre" id="nombre" class="flex-auto" autocomplete="off"/>
+        </div>
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+            <p-button label="{{opc}}" (click)="opcion()" />
+        </div>
+    </p-dialog>
+    <p-toast />
+    <p-confirmDialog />
+
+</div>
